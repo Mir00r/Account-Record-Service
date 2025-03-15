@@ -22,6 +22,7 @@ import java.util.List;
 public class AccountService implements IAccountService {
 
     private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
 
     /**
      * Get all accounts with pagination.
@@ -32,7 +33,7 @@ public class AccountService implements IAccountService {
     @Transactional(readOnly = true)
     public Page<AccountDTO> getAllAccounts(Pageable pageable) {
         return accountRepository.findAll(pageable)
-                .map(this::mapToDTO);
+                .map(accountMapper::toDTO);
     }
 
     /**
@@ -46,7 +47,7 @@ public class AccountService implements IAccountService {
     public AccountDTO getAccountByAccountNumber(String accountNumber) {
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new EntityNotFoundException("Account not found with account number: " + accountNumber));
-        return mapToDTO(account);
+        return accountMapper.toDTO(account);
     }
 
     /**
@@ -59,7 +60,7 @@ public class AccountService implements IAccountService {
     @Transactional(readOnly = true)
     public Page<AccountDTO> getAccountsByCustomerId(String customerId, Pageable pageable) {
         return accountRepository.findByCustomerId(customerId, pageable)
-                .map(this::mapToDTO);
+                .map(accountMapper::toDTO);
     }
 
     /**
@@ -72,7 +73,7 @@ public class AccountService implements IAccountService {
     @Transactional(readOnly = true)
     public Page<AccountDTO> getAccountsByAccountNumbers(List<String> accountNumbers, Pageable pageable) {
         return accountRepository.findByAccountNumberIn(accountNumbers, pageable)
-                .map(this::mapToDTO);
+                .map(accountMapper::toDTO);
     }
 
     /**
@@ -85,7 +86,7 @@ public class AccountService implements IAccountService {
     @Transactional(readOnly = true)
     public Page<AccountDTO> getAccountsByDescription(String description, Pageable pageable) {
         return accountRepository.findByDescriptionContainingIgnoreCase(description, pageable)
-                .map(this::mapToDTO);
+                .map(accountMapper::toDTO);
     }
 
     /**
@@ -105,22 +106,6 @@ public class AccountService implements IAccountService {
         account.setDescription(accountUpdateDTO.getDescription());
         Account updatedAccount = accountRepository.save(account);
         
-        return mapToDTO(updatedAccount);
-    }
-
-    /**
-     * Map Account entity to AccountDTO.
-     *
-     * @param account Account entity
-     * @return AccountDTO
-     */
-    private AccountDTO mapToDTO(Account account) {
-        return AccountDTO.builder()
-                .id(account.getId())
-                .accountNumber(account.getAccountNumber())
-                .customerId(account.getCustomerId())
-                .balance(account.getBalance())
-                .description(account.getDescription())
-                .build();
+        return accountMapper.toDTO(updatedAccount);
     }
 }

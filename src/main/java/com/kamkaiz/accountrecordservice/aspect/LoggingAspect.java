@@ -12,10 +12,32 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.UUID;
 
+/**
+ * Aspect class that provides centralized logging functionality for the application.
+ * This aspect intercepts method calls in the controller and service layers to log:
+ * - Method entry with arguments
+ * - Method exit with return values
+ * - Execution time of methods
+ * - Exception details if any occur
+ * 
+ * Uses Spring AOP to implement cross-cutting logging concerns without modifying business logic.
+ * Generates and manages correlation IDs for request tracking across method calls.
+ *
+ * @see org.aspectj.lang.annotation.Aspect
+ * @see org.springframework.stereotype.Component
+ */
 @Aspect
 @Component
 public class LoggingAspect {
 
+    /**
+     * Advice that logs method entry and exit points for controller and service layer methods.
+     * Implements around advice to capture both pre and post method execution details.
+     *
+     * @param joinPoint Provides reflective access to the advised method's details
+     * @return The result from the advised method's execution
+     * @throws Throwable If any error occurs during method execution
+     */
     @Around("execution(* com.kamkaiz.accountrecordservice.controller..*(..)) || " +
             "execution(* com.kamkaiz.accountrecordservice.service..*(..))")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {

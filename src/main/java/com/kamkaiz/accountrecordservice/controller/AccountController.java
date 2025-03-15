@@ -44,8 +44,8 @@ public class AccountController {
      */
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Page<AccountDTO>> getAllAccounts(Pageable pageable) {
-        return ResponseEntity.ok(accountService.getAllAccounts(pageable));
+    public ResponseEntity<ApiResponse<Page<AccountDTO>>> getAllAccounts(Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.success(accountService.getAllAccounts(pageable)));
     }
 
     /**
@@ -58,8 +58,8 @@ public class AccountController {
      */
     @GetMapping("/{accountNumber}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<AccountDTO> getAccountByAccountNumber(@PathVariable String accountNumber) {
-        return ResponseEntity.ok(accountService.getAccountByAccountNumber(accountNumber));
+    public ResponseEntity<ApiResponse<AccountDTO>> getAccountByAccountNumber(@PathVariable String accountNumber) {
+        return ResponseEntity.ok(ApiResponse.success(accountService.getAccountByAccountNumber(accountNumber)));
     }
 
     /**
@@ -71,10 +71,10 @@ public class AccountController {
      */
     @GetMapping("/by-customer/{customerId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Page<AccountDTO>> getAccountsByCustomerId(
+    public ResponseEntity<ApiResponse<Page<AccountDTO>>> getAccountsByCustomerId(
             @PathVariable String customerId,
             Pageable pageable) {
-        return ResponseEntity.ok(accountService.getAccountsByCustomerId(customerId, pageable));
+        return ResponseEntity.ok(ApiResponse.success(accountService.getAccountsByCustomerId(customerId, pageable)));
     }
 
     /**
@@ -86,10 +86,10 @@ public class AccountController {
      */
     @GetMapping("/by-account-numbers")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Page<AccountDTO>> getAccountsByAccountNumbers(
+    public ResponseEntity<ApiResponse<Page<AccountDTO>>> getAccountsByAccountNumbers(
             @RequestParam List<String> accountNumbers,
             Pageable pageable) {
-        return ResponseEntity.ok(accountService.getAccountsByAccountNumbers(accountNumbers, pageable));
+        return ResponseEntity.ok(ApiResponse.success(accountService.getAccountsByAccountNumbers(accountNumbers, pageable)));
     }
 
     /**
@@ -101,10 +101,10 @@ public class AccountController {
      */
     @GetMapping("/by-description")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Page<AccountDTO>> getAccountsByDescription(
+    public ResponseEntity<ApiResponse<Page<AccountDTO>>> getAccountsByDescription(
             @RequestParam String description,
             Pageable pageable) {
-        return ResponseEntity.ok(accountService.getAccountsByDescription(description, pageable));
+        return ResponseEntity.ok(ApiResponse.success(accountService.getAccountsByDescription(description, pageable)));
     }
 
     /**
@@ -126,9 +126,9 @@ public class AccountController {
      */
     @PutMapping("/{accountNumber}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<AccountDTO> updateAccountDescription(
+    public ResponseEntity<ApiResponse<AccountDTO>> updateAccountDescription(
             @PathVariable String accountNumber,
             @Valid @RequestBody AccountUpdateDTO accountUpdateDTO) {
-        return ResponseEntity.ok(accountService.updateAccountDescription(accountNumber, accountUpdateDTO));
+        return ResponseEntity.ok(ApiResponse.success(accountService.updateAccountDescription(accountNumber, accountUpdateDTO), "Account description updated successfully."));
     }
 }
