@@ -14,8 +14,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service for loading user-specific data for authentication.
- * This service implements the UserDetailsService interface to load user details by username.
+ * Implementation of Spring Security's UserDetailsService for custom user authentication.
+ * This service provides the core user loading functionality required by Spring Security
+ * to perform authentication and authorization.
+ *
+ * Key responsibilities:
+ * - Loads user details from the database during authentication
+ * - Converts domain User entities to Spring Security's UserDetails
+ * - Maps user roles to Spring Security authorities
+ * - Handles user not found scenarios
+ *
+ * @see org.springframework.security.core.userdetails.UserDetailsService
+ * @see com.kamkaiz.accountrecordservice.model.User
+ * @see org.springframework.security.core.userdetails.UserDetails
  */
 @Service
 @RequiredArgsConstructor
@@ -23,6 +34,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    /**
+     * Loads a user by username for authentication purposes.
+     * This method is called by Spring Security during the authentication process.
+     * It retrieves the user from the database and converts it to Spring Security's UserDetails format.
+     *
+     * @param username The username to search for
+     * @return UserDetails object containing the user's authentication and authorization information
+     * @throws UsernameNotFoundException if the user is not found
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1200px" height="1000px" viewBox="-0.5 -0.5 1200 1000">
+<defs/>
+<g>
+  <!-- Start Node -->
+  <ellipse cx="600" cy="30" rx="20" ry="20" fill="#000000" stroke="#000000" pointer-events="all"/>
+
+  <!-- Authentication Flow -->
+  <rect x="100" y="100" width="400" height="800" fill="none" stroke="#000000" stroke-dasharray="3 3" pointer-events="all"/>
+  <text x="300" y="130" text-anchor="middle" font-family="Helvetica" font-size="16px">Authentication Flow</text>
+
+  <!-- Login/Register Decision -->
+  <path d="M 600 50 L 600 80 L 300 80 L 300 150" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+  <path d="M 250 150 L 350 150 L 300 200 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+  <text x="300" y="180" text-anchor="middle" font-family="Helvetica" font-size="12px">Login/Register?</text>
+
+  <!-- Register Flow -->
+  <rect x="150" y="250" width="200" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+  <text x="250" y="285" text-anchor="middle" font-family="Helvetica" font-size="12px">Enter Registration Details</text>
+
+  <!-- Login Flow -->
+  <rect x="400" y="250" width="200" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+  <text x="500" y="285" text-anchor="middle" font-family="Helvetica" font-size="12px">Enter Login Credentials</text>
+
+  <!-- Batch Processing Flow -->
+  <rect x="700" y="100" width="400" height="800" fill="none" stroke="#000000" stroke-dasharray="3 3" pointer-events="all"/>
+  <text x="900" y="130" text-anchor="middle" font-family="Helvetica" font-size="16px">Batch Processing Flow</text>
+
+  <!-- Read CSV File -->
+  <rect x="800" y="200" width="200" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+  <text x="900" y="235" text-anchor="middle" font-family="Helvetica" font-size="12px">Read Account Transaction CSV</text>
+
+  <!-- Process Records -->
+  <rect x="800" y="300" width="200" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+  <text x="900" y="335" text-anchor="middle" font-family="Helvetica" font-size="12px">Process Account Records</text>
+
+  <!-- Save to Database -->
+  <rect x="800" y="400" width="200" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+  <text x="900" y="435" text-anchor="middle" font-family="Helvetica" font-size="12px">Save to Database</text>
+
+  <!-- Validation Decision -->
+  <path d="M 850 500 L 950 500 L 900 550 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+  <text x="900" y="530" text-anchor="middle" font-family="Helvetica" font-size="12px">Valid?</text>
+
+  <!-- Error Handling -->
+  <rect x="1000" y="520" width="150" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+  <text x="1075" y="550" text-anchor="middle" font-family="Helvetica" font-size="12px">Log Error</text>
+
+  <!-- Flow Connections -->
+  <path d="M 900 260 L 900 300" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+  <path d="M 900 360 L 900 400" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+  <path d="M 900 460 L 900 500" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+  <path d="M 950 500 L 1000 550" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+
+  <!-- End Nodes -->
+  <ellipse cx="900" cy="650" rx="20" ry="20" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+  <ellipse cx="900" cy="650" rx="15" ry="15" fill="#000000" stroke="#000000" pointer-events="all"/>
+</g>
+</svg>

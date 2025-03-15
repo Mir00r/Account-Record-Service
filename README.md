@@ -1,64 +1,179 @@
 # Account Record Service
 
-A Spring Boot application that processes account records from a text file using Spring Batch and provides RESTful APIs to retrieve and update the records.
+A robust Spring Boot application that processes account records from a text file using Spring Batch and provides secure RESTful APIs to retrieve and update the records. The application implements industry-standard design patterns and best practices to ensure maintainability, scalability, and security.
 
 ## Features
 
-- Spring Batch job to import account records from a text file
-- RESTful APIs with JWT authentication
-- Pagination support for all retrieval APIs
-- Search functionality by customer ID, account number(s), or description
-- Concurrent update handling using optimistic locking
+- Batch processing of account records from text files using Spring Batch
+- Secure RESTful APIs with JWT authentication
+- Advanced pagination support for efficient data retrieval
+- Flexible search functionality by customer ID, account number(s), or description
+- Concurrent update handling with optimistic locking
+- Comprehensive API documentation with Swagger/OpenAPI
+- In-memory H2 database for easy testing and development
 
-## Technologies Used
+## Architecture & Design Patterns
+
+The application follows a layered architecture with clear separation of concerns and implements several design patterns:
+
+1. **Repository Pattern**
+   - Implements data access abstraction using Spring Data JPA
+   - Provides clean separation between domain logic and data access logic
+   - Enables easy switching between different data sources
+
+2. **Builder Pattern**
+   - Used in DTOs (AccountDTO, AuthDTO) for flexible object construction
+   - Ensures immutability and validates object state during construction
+   - Improves code readability and maintainability
+
+3. **Strategy Pattern**
+   - Implemented in authentication mechanism
+   - Allows switching between different authentication strategies
+   - Facilitates future extensions of authentication methods
+
+4. **DTO Pattern**
+   - Separates domain models from API response/request objects
+   - Provides data validation and transformation layer
+   - Reduces unnecessary data exposure
+
+5. **Factory Pattern**
+   - Used for creating complex objects and service implementations
+   - Centralizes object creation logic
+   - Promotes loose coupling
+
+## Technical Stack
 
 - Java 11
 - Spring Boot 2.7.x
-- Spring Batch
 - Spring Security with JWT
+- Spring Batch
 - Spring Data JPA
 - H2 Database
 - Maven
 - Lombok
-- Swagger/OpenAPI for API documentation
+- Swagger/OpenAPI
 
-## Setup Instructions
+## Setup & Installation
 
 ### Prerequisites
 
 - Java 11 or higher
-- Maven
+- Maven 3.6 or higher
+- Git
 
-### Running the Application
+### Getting Started
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Run the application using Maven:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd Account-Record-Service
+   ```
 
-```bash
-mvn spring-boot:run
-```
+2. Configure application properties (optional):
+   - Update `src/main/resources/application.properties` if needed
+   - Default configuration uses H2 in-memory database
 
-4. The application will start on port 8080
-5. Access the H2 console at http://localhost:8080/h2-console
-6. Access the Swagger UI at http://localhost:8080/swagger-ui.html
+3. Build and run the application:
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
+
+4. Access the application:
+   - Application: http://localhost:8080
+   - H2 Console: http://localhost:8080/h2-console
+   - API Documentation: http://localhost:8080/swagger-ui.html
 
 ## API Documentation
 
-### Authentication APIs
+### Authentication
 
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login and get JWT token
+#### Register User
+```http
+POST /api/auth/register
+Content-Type: application/json
 
-### Account APIs
+{
+    "username": "user",
+    "password": "password",
+    "email": "user@example.com"
+}
+```
 
-- `GET /api/accounts` - Get all accounts (paginated)
-- `GET /api/accounts/{accountNumber}` - Get account by account number
-- `GET /api/accounts/by-customer/{customerId}` - Get accounts by customer ID (paginated)
-- `GET /api/accounts/by-account-numbers` - Get accounts by a list of account numbers (paginated)
-- `GET /api/accounts/by-description` - Get accounts by description (paginated)
-- `PUT /api/accounts/{accountNumber}` - Update account description
+#### Login
+```http
+POST /api/auth/login
+Content-Type: application/json
 
-## Design Patterns Used
+{
+    "username": "user",
+    "password": "password"
+}
+```
 
-1. **Repository Pattern**: Used for data access abstraction with Spring Data JPA
+### Account Operations
+
+#### Get All Accounts (Paginated)
+```http
+GET /api/accounts?page=0&size=10
+Authorization: Bearer {jwt-token}
+```
+
+#### Get Account by Number
+```http
+GET /api/accounts/{accountNumber}
+Authorization: Bearer {jwt-token}
+```
+
+#### Get Accounts by Customer ID
+```http
+GET /api/accounts/by-customer/{customerId}?page=0&size=10
+Authorization: Bearer {jwt-token}
+```
+
+#### Search Accounts by Description
+```http
+GET /api/accounts/by-description?description={searchTerm}&page=0&size=10
+Authorization: Bearer {jwt-token}
+```
+
+#### Update Account
+```http
+PUT /api/accounts/{accountNumber}
+Authorization: Bearer {jwt-token}
+Content-Type: application/json
+
+{
+    "description": "Updated description"
+}
+```
+
+## Security
+
+- JWT-based authentication
+- Password encryption using BCrypt
+- Role-based access control
+- Optimistic locking for concurrent updates
+
+## Error Handling
+
+The application implements a global exception handling mechanism that returns appropriate HTTP status codes and error messages:
+
+- 400 Bad Request - Invalid input
+- 401 Unauthorized - Invalid credentials
+- 403 Forbidden - Insufficient permissions
+- 404 Not Found - Resource not found
+- 409 Conflict - Concurrent modification
+- 500 Internal Server Error - Server-side errors
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

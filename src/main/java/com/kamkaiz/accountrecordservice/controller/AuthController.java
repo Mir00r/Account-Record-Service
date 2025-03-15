@@ -35,6 +35,14 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
 
+    /**
+     * Authenticates a user and returns a JWT token.
+     *
+     * @param loginRequest Contains the username and password for authentication
+     * @return ResponseEntity containing JWT token and user details if authentication is successful
+     * @throws org.springframework.security.authentication.BadCredentialsException if credentials are invalid
+     * @throws org.springframework.security.authentication.DisabledException if user account is disabled
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthDTO.LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -57,6 +65,15 @@ public class AuthController {
                 .build());
     }
 
+    /**
+     * Registers a new user in the system.
+     *
+     * @param registerRequest Contains user registration details including username, email, and password
+     * @return ResponseEntity with success message if registration is successful
+     * @throws org.springframework.web.bind.MethodArgumentNotValidException if validation fails
+     * @return HTTP 400 (Bad Request) if username or email is already taken
+     * @return HTTP 201 (Created) if registration is successful
+     */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody AuthDTO.RegisterRequest registerRequest) {
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
