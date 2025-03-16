@@ -1,13 +1,17 @@
 package com.kamkaiz.accountrecordservice.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class BaseEntity implements Auditable {
 

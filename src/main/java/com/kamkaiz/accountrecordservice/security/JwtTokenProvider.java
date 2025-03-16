@@ -27,6 +27,12 @@ public class JwtTokenProvider {
     @Value("${app.jwtExpirationInMs:86400000}")
     private int jwtExpirationInMs;
 
+    private Key signingKey;
+
+    public JwtTokenProvider() {
+        this.signingKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    }
+
     public String generateToken(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Date now = new Date();
@@ -67,7 +73,6 @@ public class JwtTokenProvider {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = jwtSecret.getBytes();
-        return Keys.hmacShaKeyFor(keyBytes);
+        return this.signingKey;
     }
 }

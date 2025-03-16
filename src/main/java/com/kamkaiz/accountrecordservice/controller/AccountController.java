@@ -2,6 +2,7 @@ package com.kamkaiz.accountrecordservice.controller;
 
 import com.kamkaiz.accountrecordservice.dto.AccountDTO;
 import com.kamkaiz.accountrecordservice.dto.AccountUpdateDTO;
+import com.kamkaiz.accountrecordservice.dto.ApiResponse;
 import com.kamkaiz.accountrecordservice.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -120,9 +121,6 @@ public class AccountController {
      * @throws org.springframework.orm.ObjectOptimisticLockingFailureException if concurrent update detected
      * @throws org.springframework.security.access.AccessDeniedException if user is not authenticated
      * @throws javax.validation.ConstraintViolationException if validation fails
-     */
-     * @param accountUpdateDTO DTO containing the new description
-     * @return Updated AccountDTO
      */
     @PutMapping("/{accountNumber}")
     @PreAuthorize("isAuthenticated()")

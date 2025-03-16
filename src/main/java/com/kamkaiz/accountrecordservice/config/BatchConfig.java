@@ -96,10 +96,9 @@ public class BatchConfig {
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         tokenizer.setDelimiter("|"); // Using pipe delimiter for transaction data
         tokenizer.setNames("accountNumber", "transactionAmount", "description", "transactionDate", "transactionTime", "customerId");
-        tokenizer.setStrict(false); // Allow flexible number of columns
+        tokenizer.setStrict(true); // Ensure all columns are present
 
-        BeanWrapperFieldSetMapper<Account> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-        fieldSetMapper.setTargetType(Account.class);
+        CustomAccountFieldSetMapper fieldSetMapper = new CustomAccountFieldSetMapper();
 
         lineMapper.setLineTokenizer(tokenizer);
         lineMapper.setFieldSetMapper(fieldSetMapper);
